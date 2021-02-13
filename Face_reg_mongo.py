@@ -37,7 +37,7 @@ i = 0
 names = []
 face_distances1 = []
 name = ""
-
+acc = 0.45 # Decrease the accuracy to decrease false positive rate and vice versa
 for pic in uk_images:
   img_path = './unknown/'+pic
   pil_image = Image.open(img_path).convert("RGB")
@@ -67,7 +67,7 @@ for pic in uk_images:
     face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
     face_distances1.append(face_distances)
     best_match_index = np.argmin(face_distances)
-    if(np.min(face_distances) < 0.45 ):
+    if(np.min(face_distances) < acc ):
       if matches[best_match_index]:
         name = known_face_names[best_match_index]
         x = mycol.count_documents({"name" : name})
